@@ -233,9 +233,8 @@ int main() {
 
     for (int n_its=0; n_its<2; ++n_its) {
         for (;;) {
-            uint32_t sample = analogRead("phaidra_formatted.txt");
+            uint32_t sample = analogRead("phaidra_formatted copy.txt");
             if (sample == -1) break;
-            
             //uint32_t scaled_sample = sample * 2;
 
             // Process signal

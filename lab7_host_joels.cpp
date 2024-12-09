@@ -864,6 +864,20 @@ int compute_peak (int sample, struct compute_peak_state *state) {
     return (peak? sample : 0);
 }
 
+// DELAY LINE
+#define DELAY_SAMPLES 12 // Adjust this value based on observed delay
+static int left_qrs_delay[DELAY_SAMPLES];
+static int left_qrs_ptr = 0;
+
+void update_left_qrs_delay(int value) {
+    left_qrs_delay[left_qrs_ptr] = value;
+    left_qrs_ptr = (left_qrs_ptr + 1) % DELAY_SAMPLES;
+}
+
+int get_delayed_left_qrs() {
+    return left_qrs_delay[left_qrs_ptr];
+}
+
 #define REFRACTORY_TICKS 100 // 200 ms at 500 Hz
 int main() {
     LOG("sample\tfiltered\tpeak_1\tmin\tmax\tthresh_1\tderiv_2\tderiv_sq_2\tavg_200ms_2\tthresh_2\tleft_QRS\trite_QRS\tdual_QRS");
@@ -875,7 +889,7 @@ int main() {
     }
 
     // Write header line for signals
-    out_file << "Sample,Filtered,Peak1,Min,Max,Thresh1,Deriv2,DerivSq,Avg200,Thresh2,LeftQRS,RightQRS,DualQRS\n";
+    out_file << "Sample,Filtered,Peak1,Min,Max,Thresh1,Deriv2,DerivSq,Avg200,Thresh2,LeftQRS,RightQRS,DualQRS,StrongL\n";
 
     int sample_count=0;	// To ignore startup artifacts.
     // Refractory_counter is zeroed at dual_QRS falling edge, and counts up each
@@ -917,16 +931,17 @@ int main() {
         if (++sample_count < 250) continue;
         int thresh_2 = threshold (&threshold_state_2, peak_2);
 
-        // DELAY LINE
-
-
         // Dual-QRS calculation combining left & right sides.
         dual_QRS_last = dual_QRS;	// pipe stage for edge detect.
         ++refractory_counter;
             int refractory_OK = (refractory_counter > REFRACTORY_TICKS),
-            left_QRS = refractory_OK && ((filtered-sample) > thresh_1),
+            left_QRS = refractory_OK && ((filtered + 0.5) > thresh_1),
             rite_QRS = refractory_OK && ((avg_200ms_2) > thresh_2);
-        dual_QRS = left_QRS && rite_QRS;
+        
+        update_left_qrs_delay(left_QRS);
+        static int strong_left = left_qrs_ptr;
+        dual_QRS = get_delayed_left_qrs() && rite_QRS;
+
 
         if (dual_QRS_last && !dual_QRS) {
             refractory_counter = 0;
@@ -942,7 +957,7 @@ int main() {
             <<threshold_state_1.min<<","<<threshold_state_1.max<<","
             <<thresh_1<<","<<deriv_2<<","<<deriv_sq_2<<","
             <<avg_200ms_2<<","<<thresh_2<<","<<left_QRS<<","<<rite_QRS
-            <<","<< dual_QRS << "\n";
+            <<","<< dual_QRS << "," << strong_left << "\n";
       }
     }
     // Close file and print final log

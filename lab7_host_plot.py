@@ -58,8 +58,9 @@ def plot_what_you_want():
     # plot_signal ("Deriv2",8)
     plot_signal("DualQRS", 1500)
     # plot_signal("Avg200", 1, 0)
-    plot_signal("LeftQRS", 2000)
-    plot_signal("RightQRS", 2000)
+    # plot_signal("LeftQRS", 2000)
+    plot_signal("RightQRS", 2100)
+    plot_signal("StrongL", 2200)
     # plot_signal("Thresh1", 1, -4000)
     # plot_signal("Thresh2", 1, -1500)
 

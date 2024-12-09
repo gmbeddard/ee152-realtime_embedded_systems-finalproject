@@ -935,7 +935,7 @@ int main() {
         dual_QRS_last = dual_QRS;	// pipe stage for edge detect.
         ++refractory_counter;
             int refractory_OK = (refractory_counter > REFRACTORY_TICKS),
-            left_QRS = refractory_OK && ((filtered + 0.5) > thresh_1),
+            left_QRS = refractory_OK && ((filtered) > thresh_1),
             rite_QRS = refractory_OK && ((avg_200ms_2) > thresh_2);
         
         update_left_qrs_delay(left_QRS);

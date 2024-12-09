@@ -55,13 +55,13 @@ def plot_what_you_want():
     plot_signal ("Sample", 1, -4000)
     plot_signal ("Filtered", 1, -4000)
     #plot_signal ("Peak_1")
-    plot_signal ("Deriv2",8)
-    # plot_signal("DualQRS", 1500)
-    # plot_signal("Avg_200", 1, 0)
+    # plot_signal ("Deriv2",8)
+    plot_signal("DualQRS", 1500)
+    # plot_signal("Avg200", 1, 0)
     plot_signal("LeftQRS", 2000)
     plot_signal("RightQRS", 2000)
-    plot_signal("Thresh1", 1, -2000)
-    plot_signal("Thresh2", 1, -2000)
+    # plot_signal("Thresh1", 1, -4000)
+    # plot_signal("Thresh2", 1, -1500)
 
     # Plot a line for y=0 if desired. If not, then just comment this out.
     n_pts = values[0].size

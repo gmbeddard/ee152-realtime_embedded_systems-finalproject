@@ -1,4 +1,4 @@
-### README Summary for GitHub Repository: Pan-Tompkins Algorithm for Real-Time ECG Analysis
+### EE152 Real-time Embedded Systems Final Project: Pan-Tompkins Algorithm for Real-Time ECG Analysis
 
 #### Project Overview
 This project implements and debugs a real-time signal-processing algorithm to detect QRS complexes in ECG waveforms using the Pan-Tompkins algorithm (PTC). Designed for an STM32 microcontroller with FreeRTOS, the system processes ECG signals, identifies QRS complexes, and calculates instantaneous heart rate. It includes debugging techniques to handle challenges in real-time biomedical signal processing.

@@ -26,9 +26,9 @@ This project implements and debugs a real-time signal-processing algorithm to de
 - Extend visualization capabilities to include additional signals and metrics.
 
 #### Repository Content
-- **Source Code**: Modular C files for ECG signal processing and debugging.
-- **Documentation**: Instructions for hardware setup, code usage, and debugging techniques.
-- **Utilities**: Python scripts for signal plotting during host-based debugging under `Lab7.`
+- **Source Code**: Modular C files for ECG signal processing and debugging. Includes a platformIO setup for use with a STM32L432KC nucleo board.
+- **Data**: Various ECG data collected in 10 second intervals, trimmed down for useage with algorithm. 
+- **Utilities**: Python scripts for signal plotting during host-based debugging under `Lab7_PTC.`
 
 #### Authors
 Gabby Beddard, Matt Bass (@mattjax16), Phaidra Martin (@pnmartin), Victoria Pontikes (@vpontikes)
